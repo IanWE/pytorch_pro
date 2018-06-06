@@ -1,0 +1,10 @@
+name : pytor 
+dependencies:
+- python
+- jupyter
+- matplotlib
+- pandas
+- pip:
+  - numpy
+  - requests
+  - pillow
