@@ -8,3 +8,6 @@ dependencies:
   - numpy
   - requests
   - pillow
+  - torch
+  - joblib
+  - sklearn
