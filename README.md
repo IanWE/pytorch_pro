@@ -1,2 +1,4 @@
-# pytorch_pro
-some code of pytorch
+# pytorch
+
+
+Codes for techniques of Pytorch
