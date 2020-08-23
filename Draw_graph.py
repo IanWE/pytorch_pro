@@ -80,6 +80,20 @@ def line_graph():
     plt.legend()
     plt.grid(True)
     plt.savefig('../image/repeat10s.pdf', bbox_inches='tight')
+    
+## bar
+def bar(x,y,name):
+    #  #set style
+    fig = plt.figure(figsize=(12,6)) #创建绘图对象
+    ax1 = fig.add_subplot(111)
+    ax1.bar(x,y,color = 'teal',edgecolor = 'white', width=0.8)
+    for i,j in zip(x,y):
+        ax1.text(i+0.1,j-0.15,'%d' % j,verticalalignment="bottom",horizontalalignment="right")
+    plt.xticks(x, ['Baseline','Camera','ReadCalendar','ReadContacts','RequestLocation','ReadSMS',"ReadCallHistory"],fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.savefig('./image/'+name+".pdf", bbox_inches='tight') #保存图
+    plt.show()  #显示图
+bar(x,y,"wrong_class")
 
 ## hitmap
 def plot_confusion_matrix(cm, classes,name,
