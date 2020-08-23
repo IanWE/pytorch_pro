@@ -26,69 +26,63 @@ def draw(label_list,y,name,lc=4):
 #特征点在图片中的坐标位置
 m = 448
 n = 392
- 
 import numpy as np
 import matplotlib.pyplot as plt
-
  # This import registers the 3D projection, but is otherwise unused.
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
+#draw 3d map
+def d3():
+    # setup the figure and axes
+    fig = plt.figure(figsize=(14, 8))  # 画布宽长比例
+    ax1 = fig.add_subplot(111, projection='3d')
 
-# setup the figure and axes
-fig = plt.figure(figsize=(14, 8))  # 画布宽长比例
-ax1 = fig.add_subplot(111, projection='3d')
+    x = np.array(range(4))
+    #y = np.array(range(3,-1,-1))
+    y = np.array(range(4))
+    x,y = np.meshgrid(x,y)
+    x,y = x.ravel(),y.ravel()
+    top = []
+    for i in range(3,-1,-1):
+    #for i in range(0, 4):
+        #for j in range(3,-1,-1):
+        for j in range(0, 4):
+            top.append(success_rate[i][j])
+    bottom = np.zeros_like(top)#每个柱的起始位置
+    width = depth = 0.5#x,y方向的宽厚
+    plt.style.use('bmh')
+    for i,j,k in zip(x,y,top):
+       # print i,j,k
+        ax1.text(i+0.3,j+0.5,k+0.2,'%.1f' % k,color='r',verticalalignment="bottom",horizontalalignment="right")
+    ax1.bar3d(x, y, bottom, width, depth, top)#,color='skyblue')# shade=True)  #x，y为数组
+    plt.xticks(x, ['0-0.00001(40)','0.1-0.3(40)','0.3-0.5(40)','0.5-1.0(40)'])
+    plt.yticks(y, 5*(y+1))#['5','10','15','20'])
+    #plt.zticks(top,['20%','40%','60%','80%','100%'])
+    ax1.set_ylabel('Number of features')
+    ax1.set_xlabel('P-value')
 
-x = np.array(range(4))
-#y = np.array(range(3,-1,-1))
-y = np.array(range(4))
-x,y = np.meshgrid(x,y)
-x,y = x.ravel(),y.ravel()
-top = []
-for i in range(3,-1,-1):
-#for i in range(0, 4):
-    #for j in range(3,-1,-1):
-    for j in range(0, 4):
-        top.append(success_rate[i][j])
-
-bottom = np.zeros_like(top)#每个柱的起始位置
-width = depth = 0.5#x,y方向的宽厚
-
-plt.style.use('bmh')
-for i,j,k in zip(x,y,top):
-   # print i,j,k
-    ax1.text(i+0.3,j+0.5,k+0.2,'%.1f' % k,color='r',verticalalignment="bottom",horizontalalignment="right")
-
-    
-
-ax1.bar3d(x, y, bottom, width, depth, top)#,color='skyblue')# shade=True)  #x，y为数组
-
-plt.xticks(x, ['0-0.00001(40)','0.1-0.3(40)','0.3-0.5(40)','0.5-1.0(40)'])
-plt.yticks(y, 5*(y+1))#['5','10','15','20'])
-#plt.zticks(top,['20%','40%','60%','80%','100%'])
-ax1.set_ylabel('Number of features')
-ax1.set_xlabel('P-value')
-
-ax1.set_zlabel('Success rate(%)')
-plt.savefig('../image/3d_adv.pdf', bbox_inches='tight')
-#for _i,i in enumerate(range(3,-1,-1)):
-plt.show()
+    ax1.set_zlabel('Success rate(%)')
+    plt.savefig('../image/3d_adv.pdf', bbox_inches='tight')
+    #for _i,i in enumerate(range(3,-1,-1)):
+    plt.show()
 
 ## Line Graph
-x = range(10)
-x_date = [61.7,54.9,55.4,48.1,66.2,\
-          61.1,68.0,34.4,58.3,48.2]
+def line_graph():
+    x = range(10)
+    x_date = [61.7,54.9,55.4,48.1,66.2,\
+              61.1,68.0,34.4,58.3,48.2]
 
-plt.style.use('bmh')
-plt.figure(figsize=(10,5))
-plt.xticks(x)
-for i,j in enumerate(x_date):
-    plt.text(i-0.2,j+0.5,'%.1f' % j)
-plt.plot(x,x_date,'-')
-plt.legend()
-plt.grid(True)
-plt.savefig('../image/repeat10s.pdf', bbox_inches='tight')
+    plt.style.use('bmh')
+    plt.figure(figsize=(10,5))
+    plt.xticks(x)
+    for i,j in enumerate(x_date):
+        plt.text(i-0.2,j+0.5,'%.1f' % j)
+    plt.plot(x,x_date,'-')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('../image/repeat10s.pdf', bbox_inches='tight')
 
 ## hitmap
- def plot_confusion_matrix(cm, classes,name,
+def plot_confusion_matrix(cm, classes,name,
                           normalize=False,
                           title=None,
                           cmap=plt.cm.Blues):
