@@ -87,7 +87,61 @@ plt.legend()
 plt.grid(True)
 plt.savefig('../image/repeat10s.pdf', bbox_inches='tight')
 
-## 
+## hitmap
+ def plot_confusion_matrix(cm, classes,name,
+                          normalize=False,
+                          title=None,
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    if not title:
+        if normalize:
+            title = 'Normalized confusion matrix'
+        else:
+            title = 'Confusion matrix, without normalization'
+
+    # Compute confusion matrix
+    
+    # Only use the labels that appear in the data
+    #     classes = classes[unique_labels(y_true, y_pred)]
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+    print(cm)
+    cm1 = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    fig, ax = plt.subplots(dpi=120)
+    im = ax.imshow(cm1, interpolation='nearest', cmap=cmap)
+    ax.yaxis.tick_right()
+    ax.xaxis.tick_top()
+    #ax.figure.colorbar(im, ax=ax)
+    # We want to show all ticks...
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           # ... and label them with the respective list entries
+           xticklabels=classes, yticklabels=classes,
+           #title=title,
+           ylabel=r'$\bf{Predicted\ Behavior\ Type}$',
+           xlabel=r'$\bf{Actual\ Behavior\ Type}$')
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=60, ha="left",
+             rotation_mode="anchor")
+
+    # Loop over data dimensions and create text annotations.
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm1.max() / 2.
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, format(cm[i, j], fmt),
+                    ha="center", va="center",
+                    color="white" if cm1[i, j] > thresh else "black")
+    fig.tight_layout()
+    plt.savefig('./image/'+str(name)+'.pdf',bbox_inches ='tight')
+    plt.show()
+    return ax
 
 
 
