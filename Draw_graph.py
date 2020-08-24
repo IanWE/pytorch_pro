@@ -154,26 +154,30 @@ def plot_confusion_matrix(cm, classes,name,
 #pie chart
 import matplotlib.pyplot as plt
 import numpy as np
-x=np.array([267,206,145,36,14,7])
-labels = ["2nd","3rd","4th","5th","6th","7th"]
-explode = np.array([0.03,0.03,0.03,0.1,0.2,0.5])
+x2=np.array([252,168,128,10,1])
+labels = ["2nd","3rd","4th","5th","7th"]
+explode = np.array([0.03,0.03,0.03,0.1,0.7])
 def absolute_value(val):
     a  = int(np.round(val/100.*x.sum(), 0))
-    return a
+    return str(np.round(val,2))+"%("+str(a)+")"
 ## pie
 def pie(x,explode,labels,name):
     #  #set style
     fig = plt.figure(figsize=(12,6)) #创建绘图对象
     ax1 = fig.add_subplot(111)
-    ax1.pie(x,explode,labels,labeldistance = 1.1,shadow = True, pctdistance=0.8, autopct=absolute_value)#autopct = '%d'
+    patches,l_text,p_text = ax1.pie(x,explode,labeldistance = 1.1,shadow = True, pctdistance=0.6, autopct=absolute_value)#autopct = '%d'
     #for i,j in zip(x,y):
     #    ax1.text(i+0.1,j-0.15,'%d' % j,verticalalignment="bottom",horizontalalignment="right")
     #plt.xticks(x, ['Baseline','Camera','ReadCalendar','ReadContacts','RequestLocation','ReadSMS',"ReadCallHistory"],fontsize=10)
     #plt.yticks(fontsize=10)
-    plt.legend(bbox_to_anchor=[1, 1.1])
+    for t in l_text:
+        t.set_size(15)
+    for t in p_text:
+        t.set_size(15)
+    plt.legend(bbox_to_anchor=[1, 1],fontsize=15,labels=labels)
     plt.savefig('./image/'+name+".pdf", bbox_inches='tight') #保存图
     plt.show()  #显示图
-pie(x,explode,labels,"wrong_class")
+pie(x2,explode,labels,"wrong_class1")
 
 
 
