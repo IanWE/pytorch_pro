@@ -1,0 +1,31 @@
+apt-get install libapache2-mod-wsgi #install 
+
+# add something in /etc/apache2/sites-enabled/000-default
+WSGIPythonPath /home/isaced/test                                                                                                                                                   
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /home/isaced/test/
+    WSGIScriptAlias / /home/isaced/test/app.wsgi                                                                                                                                       
+<Directory /home/isaced/test/>                                                                                                                                                     
+<Files app.wsgi>                                                                                                                                                                   
+    Order deny,allow
+    Allow from all
+</Files>
+</Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+#create a wsgi file
+    def application(environ,start_response):
+        status='200 OK'
+        output='Hello wsgi!'
+        response_headers=[('Content-type','text/plain'),
+                           ('Content-Length',str(len(output)))]
+        start_response(status,response_headers)
+        return[output]
+        
+sudo /etc/init.d/apache2 restart
+#if it worked, change the wsgi to below:
+from test import app as application
