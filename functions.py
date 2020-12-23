@@ -49,4 +49,7 @@ class Adv_loss(torch.nn.Module):  #Adversarial training
     def forward(self,x1,x2):
         return self.alpha*x1 + (1-self.alpha)*x2
 
-
+def normalize(data,mu,std)
+    data = (data.T - mu).T
+    data = (data.T / std).T
+    return data
