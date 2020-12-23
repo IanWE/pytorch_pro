@@ -53,3 +53,4 @@ def normalize(data,mu,std)
     data = (data.T - mu).T
     data = (data.T / std).T
     return data
+#dataset = ((dataset.T - np.mean(dataset,axis=1)) / np.std(dataset,axis=1)).T
